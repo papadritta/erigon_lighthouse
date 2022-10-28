@@ -28,8 +28,5 @@ sudo chown -R erigon:erigon /var/lib/erigon
 # start service
 sudo systemctl restart erigon
 
-# check status
-sudo systemctl status erigon
-
 # check logs
 sudo journalctl -fu erigon
