@@ -21,7 +21,8 @@ sudo mv erigon-2.27.0 /usr/local/bin/erigon
 # remove the download leftovers
 rm v2.27.0.tar.gz
 
-# set (reconfirm again) ownership for erigon folder
+# set (reconfirm again) ownership for erigon
+chmod +x /usr/local/bin/erigon
 sudo chown -R erigon:erigon /var/lib/erigon
 
 # start service
