@@ -3,17 +3,5 @@
 
 ## Installation
 ```
-git clone https://github.com/papadritta/erigon_v2.27.0.git
-cd erigon_v2.27.0
-chmod +x erigon.sh
-./erigon.sh
-```
-## Check the erigon status:
-```
-sudo systemctl status erigon
-```
-
-## Check the erigon& logs:
-```
-sudo journalctl -fu erigon
+wget -O erigon.sh https://github.com/papadritta/erigon_v2.27.0/blob/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
 ```
