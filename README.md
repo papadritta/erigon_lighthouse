@@ -3,7 +3,7 @@
 
 ## Run script for quick roolback
 ```
-wget -O erigon.sh https://github.com/papadritta/erigon_v2.27.0/blob/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
+wget -O erigon.sh https://raw.githubusercontent.com/papadritta/erigon_v2.27.0/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
 ```
 
 ## Check status & logs
