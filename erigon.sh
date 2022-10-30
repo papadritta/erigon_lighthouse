@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 apt update -y && apt upgrade -y && apt autoremove -y
@@ -6,12 +5,13 @@ apt update -y && apt upgrade -y && apt autoremove -y
 sudo systemctl stop erigon
 sudo rm -rf /usr/local/bin/erigon
 
-cd ~
+cd $HOME
 curl -LO https://github.com/ledgerwatch/erigon/archive/refs/tags/v2.27.0.tar.gz
 tar xvf v2.27.0.tar.gz
 cd erigon-2.27.0
 make erigon
-cd ~
+
+cd $HOME
 sudo mv erigon-2.27.0 /usr/local/bin/erigon
 
 rm v2.27.0.tar.gz
