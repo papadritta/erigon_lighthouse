@@ -12,18 +12,17 @@
 | RAM  | 32 G          | 64 GB          | 128 GB            |
 | SSD  | 3 TB SATA SSD |5 TB NVME       | 5 TB NVME RAID 10	|
 	
-> use one of the scripts bellow: 1.for the first installation or 2.for update to the new version
 
-## 1. Installation Erigon v2.29.0 + lighthouse v3.2.1
+## Installation Erigon v2.29.0 + lighthouse v3.2.1
 ```
 wget -O erigon.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
 ```
-## 2. Update to Erigon v2.29.0 + lighthouse v3.2.1
+## Update to Erigon v2.29.0 + lighthouse v3.2.1
 >works only if you use installation script above with different version of Erigon & Lighthouse
 ```
 wget -O erigon.v2.29.0.sh https://raw.githubusercontent.com/papadritta/erigon_v2.29.0/main/erigon.v2.29.0.sh && chmod +x erigon.v2.29.0.sh && ./erigon.v2.29.0.sh
 ```
-## 3. Check status & logs
+## Check status & logs
 - Erigon
 ```
 sudo systemctl status erigon
@@ -34,7 +33,7 @@ sudo journalctl -fu erigon
 sudo systemctl status lighthousebeacon
 sudo journalctl -fu lighthousebeacon
 ```
-## 4. Delete Erigon + lighthouse
+## Delete Erigon + lighthouse
 ```
 wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/delete.sh && chmod +x delete.sh && ./delete.sh
 ```
