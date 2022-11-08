@@ -26,4 +26,9 @@ sudo journalctl -fu erigon
 sudo systemctl status lighthousebeacon
 sudo journalctl -fu lighthousebeacon
 ```
+## 4. Delete Erigon + lighthouse
+```
+wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/delete.sh && chmod +x delete.sh && ./delete.sh
+```
+
 ALL DONE!
