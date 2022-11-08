@@ -10,8 +10,14 @@
 wget -O erigon.v2.29.0.sh https://raw.githubusercontent.com/papadritta/erigon_v2.29.0/main/erigon.v2.29.0.sh && chmod +x erigon.v2.29.0.sh && ./erigon.v2.29.0.sh
 ```
 ## Check status & logs
+- Erigon
 ```
 sudo systemctl status erigon
 sudo journalctl -fu erigon
+```
+- Lighthouse
+```
+sudo systemctl status lighthousebeacon
+sudo journalctl -fu lighthousebeacon
 ```
 ALL DONE!
