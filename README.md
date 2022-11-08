@@ -4,13 +4,18 @@
 - officail Github page Erigon [here](https://github.com/ledgerwatch/erigon)
 - officail Github page lighthouse [here](https://github.com/sigp/lighthouse)
 
-## Automatic script for users who used manual from [kw1knode](https://github.com/kw1knode/erigon_bash_v2)
+*NOTE!: use one of the scripts bellow: 1.for the first installation or 2.for update to the new version*
 
-## Run script for quick update to Erigon v2.29.0 + lighthouse v3.2.1
+## 1. Installation Erigon v2.29.0 + lighthouse v3.2.1
+```
+wget -O erigon.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
+```
+## 2. Update to Erigon v2.29.0 + lighthouse v3.2.1
+>works only if you use installation script above with different version of Erigon & Lighthouse
 ```
 wget -O erigon.v2.29.0.sh https://raw.githubusercontent.com/papadritta/erigon_v2.29.0/main/erigon.v2.29.0.sh && chmod +x erigon.v2.29.0.sh && ./erigon.v2.29.0.sh
 ```
-## Check status & logs
+## 3. Check status & logs
 - Erigon
 ```
 sudo systemctl status erigon
