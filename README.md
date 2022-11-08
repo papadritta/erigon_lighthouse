@@ -17,6 +17,7 @@
 ```
 wget -O erigon.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
 ```
+## or
 ## Update to Erigon v2.29.0 + lighthouse v3.2.1
 >works only if you use installation script above with different version of Erigon & Lighthouse
 ```
