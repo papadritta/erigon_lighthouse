@@ -33,7 +33,5 @@ sudo chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse/beacon
 sudo systemctl restart erigon
 sudo systemctl restart lighthousebeacon
 
-sudo systemctl status erigon
-sudo systemctl status lighthousebeacon
 
 
