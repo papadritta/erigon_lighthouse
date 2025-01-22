@@ -13,31 +13,39 @@
 | RAM  | 32 G          | 64 GB          | 128 GB            |
 | SSD  | 3 TB SATA SSD |5 TB NVME       | 5 TB NVME RAID 10	|
 	
+## Prerequisites
+- Supported OS: Ubuntu 20.04+ (or any systemd-based Linux distro)
+- Root or sudo privileges
 
-## Installation from scratch Erigon v2.61.0 + lighthouse v6.0.1 (if not installed)
-```
+## Important Note:
+The provided script is smart enough to:
+- Install Erigon and Lighthouse from scratch if not installed.
+- Update to the specified versions if they are already installed.
+
+## Installation from Scratch Erigon v2.61.0 + Lighthouse v6.0.1 (if not installed)
+```bash
 wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
 ```
 
 ## or
-## Update to Erigon v2.61.0 + lighthouse v6.0.1 (from any version)
+## Update to Erigon v2.61.0 + Lighthouse v6.0.1 (from any version)
 >works only if you use installation script above with different version of Erigon & Lighthouse
-```
+```bash
 wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
 ```
 ## Check status & logs
 - Erigon
-```
+```bash
 sudo systemctl status erigon
 sudo journalctl -fu erigon
 ```
 - Lighthouse
-```
+```bash
 sudo systemctl status lighthousebeacon
 sudo journalctl -fu lighthousebeacon
 ```
 ## Delete Erigon + lighthouse
-```
+```bash
 wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/delete.sh && chmod +x delete.sh && ./delete.sh
 ```
 ## Do you need a server?
