@@ -1,6 +1,17 @@
 # Installation  NEW release Erigon [v2.61.0](https://github.com/ledgerwatch/erigon/releases/tag/v2.61.0) + lighthouse [v6.0.1](https://github.com/sigp/lighthouse/tree/v6.0.1) or quick update
 ![Copy of Copy of Copy of Staking is live](https://github.com/user-attachments/assets/d87dc4fa-1143-4df0-a622-e96d9490d2d7)
 
+## Table of Contents
+- [Links](#links)
+- [Node Specs](#node-specs)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation-from-scratch)
+- [Update](#update)
+- [Check Status & Logs](#check-status--logs)
+- [Delete Erigon + Lighthouse](#delete-erigon--lighthouse)
+- [Do you need a server?](#referal)
+- [FAQ](#faq)
+
 ## Links
 - official Github page Erigon [here](https://github.com/ledgerwatch/erigon)
 - official Github page lighthouse [here](https://github.com/sigp/lighthouse)
@@ -71,5 +82,5 @@ wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse
 
 - **Q: How can I restart the services after an update?**  
   **A**: Use `sudo systemctl restart erigon` and `sudo systemctl restart lighthousebeacon`.
-  
+
 ALL DONE!
