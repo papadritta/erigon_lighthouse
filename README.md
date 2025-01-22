@@ -4,6 +4,7 @@
 ## Table of Contents
 - [Links](#links)
 - [Node Specs](#node-specs)
+- [Check your Node Specs](#check-your-node-specs)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation-erigon-v2610--lighthouse-v601)
 - [Update](#update-to-erigon-v2610--lighthouse-v601)
@@ -23,13 +24,19 @@
 | CPUs | 16 vcore      | 32 vcore       | 64 vcore          |
 | RAM  | 32 G          | 64 GB          | 128 GB            |
 | SSD  | 3 TB SATA SSD |5 TB NVME       | 5 TB NVME RAID 10	|
-	
+
+## Check your Node Specs
+>Run this script to be sure that you have meet the min requiment for the following installation
+```bash
+wget -O check.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/box/check.sh && chmod +x check.sh && ./check.sh
+```
+
 ## Prerequisites
 - Supported OS: Ubuntu 20.04+ (or any systemd-based Linux distro)
 - Root or sudo privileges
 
 ## Important Note:
-The provided script is smart enough to:
+The provided bellow script is smart enough to:
 - Install Erigon and Lighthouse from scratch if not installed.
 - Update to the specified versions if they are already installed.
 
