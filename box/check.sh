@@ -22,7 +22,7 @@ install_dependencies
 # Get current system specifications
 AVAILABLE_CPUS=$(nproc)
 AVAILABLE_RAM=$(grep MemTotal /proc/meminfo | awk '{print $2 / 1024}')
-AVAILABLE_DISK=$(df --output=avail /var/lib | tail -1)
+AVAILABLE_DISK=$(df --output=avail / | tail -1 | awk '{print $1 / 1024}') # Convert KB to MB
 
 # Generate a results table
 print_results_table() {
@@ -53,7 +53,7 @@ else
 fi
 
 # Check disk space
-if [ "$AVAILABLE_DISK" -lt "$MIN_DISK" ]; then
+if [ "$(echo "$AVAILABLE_DISK < $MIN_DISK" | bc)" -eq 1 ]; then
   echo -e "${RED}Error: At least $MIN_DISK MB of disk space are required. Found: $AVAILABLE_DISK MB.${RESET}"
   DISK_OK=false
 else
