@@ -1,5 +1,5 @@
 # Installation  NEW release Erigon [v2.61.0](https://github.com/ledgerwatch/erigon/releases/tag/v2.61.0) + lighthouse [v6.0.1](https://github.com/sigp/lighthouse/tree/v6.0.1) or quick update
-![Copy of Copy of Copy of Staking is live](https://user-images.githubusercontent.com/90826754/200572250-6746122b-2dc4-4825-807c-4142ce2cef12.png)
+![Copy of Copy of Copy of Staking is live](https://github.com/user-attachments/assets/d87dc4fa-1143-4df0-a622-e96d9490d2d7)
 
 ## Links
 - official Github page Erigon [here](https://github.com/ledgerwatch/erigon)
