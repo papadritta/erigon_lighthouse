@@ -5,11 +5,11 @@
 - [Links](#links)
 - [Node Specs](#node-specs)
 - [Prerequisites](#prerequisites)
-- [Installation](#installation-from-scratch)
-- [Update](#update)
+- [Installation](#installation-erigon-v2610--lighthouse-v601)
+- [Update](#update-to-erigon-v2610--lighthouse-v601)
 - [Check Status & Logs](#check-status--logs)
 - [Delete Erigon + Lighthouse](#delete-erigon--lighthouse)
-- [Do you need a server?](#referal)
+- [Do you need a server?](#do-you-need-a-server)
 - [FAQ](#faq)
 
 ## Links
