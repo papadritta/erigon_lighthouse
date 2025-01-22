@@ -22,7 +22,7 @@ install_dependencies
 # Get current system specifications
 AVAILABLE_CPUS=$(nproc)
 AVAILABLE_RAM=$(grep MemTotal /proc/meminfo | awk '{print $2 / 1024}')
-AVAILABLE_DISK=$(df --output=avail / | tail -1 | awk '{print $1 / 1024}') # Convert KB to MB
+AVAILABLE_DISK=$(df --block-size=1M --output=avail / | tail -1 | tr -d ' ') # Force MB and strip whitespace
 
 # Generate a results table
 print_results_table() {
@@ -31,7 +31,7 @@ print_results_table() {
   printf "|%-22s|%-12s|%-12s|\n" "----------------------" "------------" "------------"
   printf "| %-20s | %-10s | %-10s |\n" "CPU Cores" "$MIN_CPUS" "$AVAILABLE_CPUS"
   printf "| %-20s | %-10s | %-10.1f |\n" "RAM (MB)" "$MIN_RAM" "$AVAILABLE_RAM"
-  printf "| %-20s | %-10s | %-10.1f |\n" "Disk Space (MB)" "$MIN_DISK" "$AVAILABLE_DISK"
+  printf "| %-20s | %-10s | %-10s |\n" "Disk Space (MB)" "$MIN_DISK" "$AVAILABLE_DISK"
 }
 
 # Check CPU
@@ -53,7 +53,7 @@ else
 fi
 
 # Check disk space
-if [ "$(echo "$AVAILABLE_DISK < $MIN_DISK" | bc)" -eq 1 ]; then
+if [ "$AVAILABLE_DISK" -lt "$MIN_DISK" ]; then
   echo -e "${RED}Error: At least $MIN_DISK MB of disk space are required. Found: $AVAILABLE_DISK MB.${RESET}"
   DISK_OK=false
 else
