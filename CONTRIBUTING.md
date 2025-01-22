@@ -41,6 +41,22 @@ Want to contribute code? Follow these steps:
 
 ---
 
+## Tags for Issues and PRs
+
+Here are the tags you can use when creating or contributing to Issues and Pull Requests:
+
+- **`bug`**: Something isn't working.
+- **`documentation`**: Improvements or additions to documentation.
+- **`duplicate`**: This issue or pull request already exists.
+- **`enhancement`**: New feature or request.
+- **`good first issue`**: Good for newcomers.
+- **`help wanted`**: Extra attention is needed.
+- **`invalid`**: This doesn't seem right.
+- **`question`**: Further information is requested.
+- **`wontfix`**: This will not be worked on.
+
+---
+
 ## Code Style Guidelines
 
 - **Shell Scripts**:
