@@ -24,6 +24,16 @@ AVAILABLE_CPUS=$(nproc)
 AVAILABLE_RAM=$(grep MemTotal /proc/meminfo | awk '{print $2 / 1024}')
 AVAILABLE_DISK=$(df --output=avail /var/lib | tail -1)
 
+# Generate a results table
+print_results_table() {
+  echo -e "\n${CYAN}System Requirements Check:${RESET}"
+  printf "| %-20s | %-10s | %-10s |\n" "Component" "Required" "Available"
+  printf "|%-22s|%-12s|%-12s|\n" "----------------------" "------------" "------------"
+  printf "| %-20s | %-10s | %-10s |\n" "CPU Cores" "$MIN_CPUS" "$AVAILABLE_CPUS"
+  printf "| %-20s | %-10s | %-10.1f |\n" "RAM (MB)" "$MIN_RAM" "$AVAILABLE_RAM"
+  printf "| %-20s | %-10s | %-10.1f |\n" "Disk Space (MB)" "$MIN_DISK" "$AVAILABLE_DISK"
+}
+
 # Check CPU
 if [ "$AVAILABLE_CPUS" -lt "$MIN_CPUS" ]; then
   echo -e "${RED}Error: At least $MIN_CPUS CPU cores are required. Found: $AVAILABLE_CPUS.${RESET}"
@@ -50,6 +60,9 @@ else
   echo -e "${CYAN}Disk space check passed: $AVAILABLE_DISK MB available.${RESET}"
   DISK_OK=true
 fi
+
+# Print results table
+print_results_table
 
 # Notify user
 if [ "$CPU_OK" == true ] && [ "$RAM_OK" == true ] && [ "$DISK_OK" == true ]; then
