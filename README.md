@@ -1,4 +1,4 @@
-# Installation  NEW release Erigon [v2.29.0](https://github.com/ledgerwatch/erigon/releases/tag/v2.29.0) + lighthouse [v3.2.1](https://github.com/sigp/lighthouse/tree/v3.2.1) or quick update
+# Installation  NEW release Erigon [v2.61.0](https://github.com/ledgerwatch/erigon/releases/tag/v2.61.0) + lighthouse [v6.0.1](https://github.com/sigp/lighthouse/tree/v6.0.1) or quick update
 ![Copy of Copy of Copy of Staking is live](https://user-images.githubusercontent.com/90826754/200572250-6746122b-2dc4-4825-807c-4142ce2cef12.png)
 
 ## Links
@@ -14,15 +14,16 @@
 | SSD  | 3 TB SATA SSD |5 TB NVME       | 5 TB NVME RAID 10	|
 	
 
-## Installation Erigon v2.29.0 + lighthouse v3.2.1
+## Installation from scratch Erigon v2.61.0 + lighthouse v6.0.1 (if not installed)
 ```
-wget -O erigon.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon.sh && chmod +x erigon.sh && ./erigon.sh
+wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
 ```
+
 ## or
-## Update to Erigon v2.29.0 + lighthouse v3.2.1
+## Update to Erigon v2.61.0 + lighthouse v6.0.1 (from any version)
 >works only if you use installation script above with different version of Erigon & Lighthouse
 ```
-wget -O erigon.v2.29.0.sh https://raw.githubusercontent.com/papadritta/erigon_v2.29.0/main/erigon.v2.29.0.sh && chmod +x erigon.v2.29.0.sh && ./erigon.v2.29.0.sh
+wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
 ```
 ## Check status & logs
 - Erigon
