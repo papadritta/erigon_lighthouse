@@ -56,4 +56,20 @@ wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse
 
 **NOTE!: use a referal link & you will get 100$ to your server provider account**
 
+## FAQ
+- **Q: Can I install this on a server with less than the minimum specs?**  
+  **A**: It is not recommended as performance will be significantly degraded.
+
+- **Q: How do I verify the installation?**  
+  **A**: Use `sudo systemctl status erigon` and `sudo systemctl status lighthousebeacon` to check the services.
+
+- **Q: Can I run the node on a virtual machine (VM)?**  
+  **A**: Yes, but ensure the VM meets the minimum specs for optimal performance.
+
+- **Q: How do I stop the services temporarily?**  
+  **A**: Use `sudo systemctl stop erigon` and `sudo systemctl stop lighthousebeacon` to stop the services.
+
+- **Q: How can I restart the services after an update?**  
+  **A**: Use `sudo systemctl restart erigon` and `sudo systemctl restart lighthousebeacon`.
+  
 ALL DONE!
