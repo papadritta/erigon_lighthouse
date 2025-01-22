@@ -5,9 +5,14 @@ MIN_CPUS=16
 MIN_RAM=32000   # In MB (32 GB)
 MIN_DISK=3000000 # In MB (3 TB)
 
+# Define colors
+CYAN="\e[36m"
+RED="\e[31m"
+RESET="\e[0m"
+
 # Install necessary dependencies
 install_dependencies() {
-  echo "Installing necessary dependencies..."
+  echo -e "${CYAN}Installing necessary dependencies...${RESET}"
   sudo apt update && sudo apt install -y bc lsb-release
 }
 
@@ -21,37 +26,37 @@ AVAILABLE_DISK=$(df --output=avail /var/lib | tail -1)
 
 # Check CPU
 if [ "$AVAILABLE_CPUS" -lt "$MIN_CPUS" ]; then
-  echo "Error: At least $MIN_CPUS CPU cores are required. Found: $AVAILABLE_CPUS."
+  echo -e "${RED}Error: At least $MIN_CPUS CPU cores are required. Found: $AVAILABLE_CPUS.${RESET}"
   CPU_OK=false
 else
-  echo "CPU cores check passed: $AVAILABLE_CPUS cores available."
+  echo -e "${CYAN}CPU cores check passed: $AVAILABLE_CPUS cores available.${RESET}"
   CPU_OK=true
 fi
 
 # Check RAM
 if [ "$(echo "$AVAILABLE_RAM < $MIN_RAM" | bc)" -eq 1 ]; then
-  echo "Error: At least $MIN_RAM MB of RAM are required. Found: $AVAILABLE_RAM MB."
+  echo -e "${RED}Error: At least $MIN_RAM MB of RAM are required. Found: $AVAILABLE_RAM MB.${RESET}"
   RAM_OK=false
 else
-  echo "RAM check passed: $AVAILABLE_RAM MB available."
+  echo -e "${CYAN}RAM check passed: $AVAILABLE_RAM MB available.${RESET}"
   RAM_OK=true
 fi
 
 # Check disk space
 if [ "$AVAILABLE_DISK" -lt "$MIN_DISK" ]; then
-  echo "Error: At least $MIN_DISK MB of disk space are required. Found: $AVAILABLE_DISK MB."
+  echo -e "${RED}Error: At least $MIN_DISK MB of disk space are required. Found: $AVAILABLE_DISK MB.${RESET}"
   DISK_OK=false
 else
-  echo "Disk space check passed: $AVAILABLE_DISK MB available."
+  echo -e "${CYAN}Disk space check passed: $AVAILABLE_DISK MB available.${RESET}"
   DISK_OK=true
 fi
 
 # Notify user
 if [ "$CPU_OK" == true ] && [ "$RAM_OK" == true ] && [ "$DISK_OK" == true ]; then
-  echo -e "\nYour server meets the minimum requirements. You can proceed with the installation."
+  echo -e "\n${CYAN}Your server meets the minimum requirements. You can proceed with the installation.${RESET}"
 else
-  echo -e "\nYour server does not meet the minimum requirements. Please consider upgrading or switching to a server with the following specs:"
-  echo "- At least $MIN_CPUS CPU cores"
-  echo "- At least $MIN_RAM MB RAM"
-  echo "- At least $MIN_DISK MB available disk space"
+  echo -e "\n${RED}Your server does not meet the minimum requirements. Please consider upgrading or switching to a server with the following specs:${RESET}"
+  echo -e "${RED}- At least $MIN_CPUS CPU cores${RESET}"
+  echo -e "${RED}- At least $MIN_RAM MB RAM${RESET}"
+  echo -e "${RED}- At least $MIN_DISK MB available disk space${RESET}"
 fi
