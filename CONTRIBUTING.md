@@ -60,7 +60,7 @@ Ensure your changes do not break functionality:
 ---
 
 ## Community
-- Join discussions or ask questions in the [Discussions tab](https://github.com/papadritta/erigon_lighthouse/discussions) (if enabled).
+- Join discussions or ask questions in the [Discussions tab](https://github.com/papadritta/erigon_lighthouse/discussions).
 - Share feedback directly via [GitHub Issues](https://github.com/papadritta/erigon_lighthouse/issues).
 
 ---

@@ -12,6 +12,7 @@
 - [Delete Erigon + Lighthouse](#delete-erigon--lighthouse)
 - [Do you need a server?](#do-you-need-a-server)
 - [FAQ](#faq)
+- [Contributing](#Contributing)
 
 ## Links
 - official Github page Erigon [here](https://github.com/ledgerwatch/erigon)
@@ -90,4 +91,15 @@ wget -O delete.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse
 - **Q: How can I restart the services after an update?**  
   **A**: Use `sudo systemctl restart erigon` and `sudo systemctl restart lighthousebeacon`.
 
+- **Q: Still have questions?**  
+  **A**: Ask in the [FAQ Discussions section](https://github.com/papadritta/erigon_lighthouse/discussions).
+
+## Contributing
+We welcome contributions from the community! To get started, see [CONTRIBUTING.md](https://github.com/papadritta/erigon_lighthouse/blob/main/CONTRIBUTING.md).
+
+For ideas or feedback, participate in the [Discussions tab](https://github.com/papadritta/erigon_lighthouse/discussions).
+
+
 ALL DONE!
+
+
