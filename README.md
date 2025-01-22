@@ -24,14 +24,14 @@ The provided script is smart enough to:
 
 ## Installation from Scratch Erigon v2.61.0 + Lighthouse v6.0.1 (if not installed)
 ```bash
-wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
+wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
 ```
 
 ## or
 ## Update to Erigon v2.61.0 + Lighthouse v6.0.1 (from any version)
 >works only if you use installation script above with different version of Erigon & Lighthouse
 ```bash
-wget -O er.v2.61.0_lh.v6.0.1.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/er.v2.61.0_lh.v6.0.1.sh && chmod +x er.v2.61.0_lh.v6.0.1.sh && ./er.v2.61.0_lh.v6.0.1.sh
+wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
 ```
 ## Check status & logs
 - Erigon
