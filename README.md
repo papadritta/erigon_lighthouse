@@ -22,14 +22,14 @@ The provided script is smart enough to:
 - Install Erigon and Lighthouse from scratch if not installed.
 - Update to the specified versions if they are already installed.
 
-## Installation from Scratch Erigon v2.61.0 + Lighthouse v6.0.1 
->if not installed
+## Installation Erigon v2.61.0 + Lighthouse v6.0.1 
+>installation on a Fresh Server  
 ```bash
 wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/box/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
 ```
 
 ## Update to Erigon v2.61.0 + Lighthouse v6.0.1 
->update from any version if you use installation script above
+>update from any version if you use previous installation script from /archive
 ```bash
 wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/box/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
 ```
