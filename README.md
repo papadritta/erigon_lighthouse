@@ -41,6 +41,13 @@ The provided bellow script is smart enough to:
 - Install Erigon and Lighthouse from scratch if not installed.
 - Update to the specified versions if they are already installed.
 
+## Sync Times:
+>The following are estimated sync times for syncing from scratch to the latest block. Actual times may vary depending on your hardware and network bandwidth.
+
+| Chain      | Archive              | Full               | Minimal           |
+|------------|----------------------|--------------------|-------------------|
+| Ethereum   | 7 Hours, 55 Minutes | 4 Hours, 23 Minutes | 1 Hour, 41 Minutes |
+
 ## Installation Erigon v2.61.0 + Lighthouse v6.0.1 
 >installation on a Fresh Server  
 ```bash
