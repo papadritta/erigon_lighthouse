@@ -26,6 +26,7 @@
 | RAM  | 32 G          | 64 GB          | 128 GB            |
 | SSD  | 3 TB SATA SSD |5 TB NVME       | 5 TB NVME RAID 10	|
 
+![2](https://github.com/user-attachments/assets/75769b81-195b-4310-82d4-5ac8d3afc458)
 ## Check your Node Specs
 >Run this script to be sure that you have meet the min requiment for the following installation
 ```bash
@@ -48,6 +49,7 @@ The provided bellow script is smart enough to:
 |------------|----------------------|--------------------|-------------------|
 | Ethereum   | 7 Hours, 55 Minutes | 4 Hours, 23 Minutes | 1 Hour, 41 Minutes |
 
+![2](https://github.com/user-attachments/assets/68c2ac52-b3c0-4bd0-b76e-7bf09dcfae75)
 ## Installation Erigon v2.61.0 + Lighthouse v6.0.1 
 >installation on a Fresh Server  
 ```bash
