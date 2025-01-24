@@ -49,7 +49,7 @@ The provided bellow script is smart enough to:
 |------------|----------------------|--------------------|-------------------|
 | Ethereum   | 7 Hours, 55 Minutes | 4 Hours, 23 Minutes | 1 Hour, 41 Minutes |
 
-![2](https://github.com/user-attachments/assets/68c2ac52-b3c0-4bd0-b76e-7bf09dcfae75)
+![1](https://github.com/user-attachments/assets/789825b1-937e-44d6-940a-132303a7dd62)
 ## Installation Erigon v2.61.0 + Lighthouse v6.0.1 
 >installation on a Fresh Server  
 ```bash
