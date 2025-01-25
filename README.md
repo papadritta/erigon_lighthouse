@@ -54,13 +54,13 @@ The provided bellow script is smart enough to:
 | Ethereum   | 7 Hours, 55 Minutes | 4 Hours, 23 Minutes | 1 Hour, 41 Minutes |
 
 ![1](https://github.com/user-attachments/assets/789825b1-937e-44d6-940a-132303a7dd62)
-## Installation Erigon v2.61.0 + Lighthouse v6.0.1 
+## Installation Erigon + Lighthouse 
 >installation on a Fresh Server  
 ```bash
 wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/box/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
 ```
 
-## Update to Erigon v2.61.0 + Lighthouse v6.0.1 
+## Update Erigon + Lighthouse
 >update from any version if you use previous installation script from /archive
 ```bash
 wget -O erigon_lh_setup.sh https://raw.githubusercontent.com/papadritta/erigon_lighthouse/main/box/erigon_lh_setup.sh && chmod +x erigon_lh_setup.sh && ./erigon_lh_setup.sh
