@@ -14,13 +14,13 @@
 - [FAQ](#faq)
 - [Contributing](#Contributing)
 
-![Erigon Latest Release](https://img.shields.io/github/v/release/erigontech/erigon?label=Erigon&color=blue)
-![Lighthouse Latest Release](https://img.shields.io/github/v/release/sigp/lighthouse?label=Lighthouse&color=blueviolet)
-![Test Workflow Status](https://github.com/papadritta/erigon_lighthouse/actions/workflows/test-scripts.yml/badge.svg)
-
 ## Links
 - official Github page Erigon [here](https://github.com/ledgerwatch/erigon)
 - official Github page lighthouse [here](https://github.com/sigp/lighthouse)
+
+![Erigon Latest Release](https://img.shields.io/github/v/release/erigontech/erigon?label=Erigon&color=blue)
+![Lighthouse Latest Release](https://img.shields.io/github/v/release/sigp/lighthouse?label=Lighthouse&color=blueviolet)
+![Test Workflow Status](https://github.com/papadritta/erigon_lighthouse/actions/workflows/test-scripts.yml/badge.svg)
 
 ## Node Specs
 
