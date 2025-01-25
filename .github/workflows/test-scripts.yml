@@ -1,0 +1,42 @@
+name: Test Bash Scripts
+
+on:
+  pull_request: # Run on pull requests to the main branch
+    branches:
+      - main
+  push: # Optional: Run on push to the main branch
+    branches:
+      - main
+
+jobs:
+  test-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Install dependencies needed for the scripts
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y curl tar jq bc lsb-release build-essential
+
+    # Test the check.sh script
+    - name: Run check.sh
+      run: |
+        chmod +x ./box/check.sh
+        ./box/check.sh
+
+    # Test the erigon_lh_setup.sh script
+    - name: Run erigon_lh_setup.sh
+      run: |
+        chmod +x ./box/erigon_lh_setup.sh
+        ./box/erigon_lh_setup.sh
+      env: 
+        HOME: /home/runner # Define HOME to avoid issues during testing (optional)
+
+    # Validate that the scripts completed successfully
+    - name: Validate Scripts
+      run: echo "All scripts passed successfully!"
