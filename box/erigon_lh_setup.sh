@@ -8,6 +8,31 @@ check_installed() {
   systemctl is-active --quiet "$1" && echo "true" || echo "false"
 }
 
+printLogo() {
+  echo -e "\e[34m"  # Blue color
+  echo "============================================================="
+  echo "   ███████╗ ██████╗  ██╗  ██████╗   ██████╗  ███╗   ██╗"
+  echo "   ██╔════╝ ██╔══██╗ ██║ ██╔════╝  ██╔═══██╗ ████╗  ██║"
+  echo "   █████╗   ██████╔╝ ██║ ██║  ███╗ ██║   ██║ ██╔██╗ ██║"
+  echo "   ██╔══╝   ██╔═══╝  ██║ ██║   ██║ ██║   ██║ ██║╚██╗██║"
+  echo "   ███████╗ ██║ ╚██╗ ██║ ╚██████╔╝ ╚██████╔╝ ██║ ╚████║"
+  echo "   ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═════╝   ╚═════╝  ╚═╝  ╚═══╝"
+  echo "============================================================="
+  echo -e "\e[39m"  # Reset color
+}
+
+printCyan() {
+  echo -e "\e[96m$1\e[39m"
+}
+
+printRed() {
+  echo -e "\e[91m$1\e[39m"
+}
+
+printLine() {
+  echo "============================================================="
+}
+
 if exists curl; then
   echo ''
 else
@@ -19,15 +44,14 @@ if [ -f "$bash_profile" ]; then
     . $HOME/.bash_profile
 fi
 
-source <(curl -s https://raw.githubusercontent.com/papadritta/scripts/main/main.sh)
-
 printLogo
 
 printCyan "Updating packages..." && sleep 1
-apt update -y && apt upgrade -y && apt autoremove -y
+sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
 
 printCyan "Installing dependencies..." && sleep 1
-apt-get update && apt-get install -y git clang llvm ca-certificates curl build-essential binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq
+sudo apt-get update
+sudo apt-get install -y git clang llvm ca-certificates curl build-essential binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq gcc g++ libssl-dev protobuf-compiler clang llvm
 
 printCyan "Installing Golang..." && sleep 1
 cd $HOME
@@ -56,7 +80,13 @@ install_or_update_erigon() {
   curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v2.61.0.tar.gz
   tar xvf v2.61.0.tar.gz
   cd erigon-2.61.0
+
+  printCyan "Building Erigon..." && sleep 1
   make erigon
+  if [[ $? -ne 0 ]]; then
+    printRed "Error: Failed to build Erigon. Check the logs for details."
+    exit 1
+  fi
 
   cd $HOME
   sudo mv erigon-2.61.0 /usr/local/bin/erigon
@@ -77,7 +107,7 @@ Group=erigon
 Type=simple
 Restart=always
 RestartSec=5
-ExecStart=/usr/local/bin/erigon/build/bin/erigon \
+ExecStart=/usr/local/bin/erigon/build/erigon \
   --datadir=/var/lib/erigon \
   --rpc.gascap=50000000 \
   --http \
@@ -151,24 +181,10 @@ install_or_update_lighthouse
 
 printLine
 
-printCyan "Check Erigon status..." && sleep 1
-if [[ `service erigon status | grep active` =~ "running" ]]; then
-  echo -e "Your erigon \e[32m. installed and works\e[39m!"
-  echo -e "You can check node status by the command \e[7m. sudo systemctl status erigon\e[0m"
-  echo -e "Press \e[7mQ\e[0m for exit from status menu"
-  echo -e "You can check logs by the command \e[7m. sudo journalctl -fu erigon\e[0m"
-else
-  echo -e "Your erigon \e[31m. was not installed correctly\e[39m, please reinstall."
-fi
-
-printCyan "Check lighthousebeacon status..." && sleep 1
-if [[ `service lighthousebeacon status | grep active` =~ "running" ]]; then
-  echo -e "Your lighthousebeacon \e[32m. installed and works\e[39m!"
-  echo -e "You can check node status by the command \e[7m. sudo systemctl status lighthousebeacon\e[0m"
-  echo -e "Press \e[7mQ\e[0m for exit from status menu"
-  echo -e "You can check logs by the command \e[7m. sudo journalctl -fu lighthousebeacon\e[0m"
-else
-  echo -e "Your lighthousebeacon \e[31m. was not installed correctly\e[39m, please reinstall."
-fi
-
-"ALL DONE!"
+printCyan "Installation Completed!" && sleep 1
+echo -e "\nHelpful Commands:"
+echo -e "Check Erigon status: \e[32msudo systemctl status erigon\e[39m"
+echo -e "View Erigon logs: \e[32msudo journalctl -fu erigon\e[39m"
+echo -e "Check Lighthouse status: \e[32msudo systemctl status lighthousebeacon\e[39m"
+echo -e "View Lighthouse logs: \e[32msudo journalctl -fu lighthousebeacon\e[39m"
+echo -e "ALL DONE!"
