@@ -181,10 +181,26 @@ install_or_update_lighthouse
 
 printLine
 
-printCyan "Installation Completed!" && sleep 1
-echo -e "\nHelpful Commands:"
-echo -e "Check Erigon status: \e[32msudo systemctl status erigon\e[39m"
-echo -e "View Erigon logs: \e[32msudo journalctl -fu erigon\e[39m"
-echo -e "Check Lighthouse status: \e[32msudo systemctl status lighthousebeacon\e[39m"
-echo -e "View Lighthouse logs: \e[32msudo journalctl -fu lighthousebeacon\e[39m"
-echo -e "ALL DONE!"
+printCyan "Check Erigon status..." && sleep 1
+if [[ $(systemctl is-active erigon) == "active" ]]; then
+  echo -e "Your Erigon \e[32mhas been installed and is running correctly\e[39m!"
+  echo -e "You can check the node status with the command: \e[7msudo systemctl status erigon\e[0m"
+  echo -e "Press \e[7mQ\e[0m to exit the status menu."
+  echo -e "You can also view logs with: \e[7msudo journalctl -fu erigon\e[0m"
+else
+  echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
+  echo -e "Please check the logs with: \e[7msudo journalctl -xeu erigon\e[0m and restart the script."
+fi
+
+printCyan "Check Lighthouse Beacon status..." && sleep 1
+if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
+  echo -e "Your Lighthouse Beacon \e[32mhas been installed and is running correctly\e[39m!"
+  echo -e "You can check the node status with the command: \e[7msudo systemctl status lighthousebeacon\e[0m"
+  echo -e "Press \e[7mQ\e[0m to exit the status menu."
+  echo -e "You can also view logs with: \e[7msudo journalctl -fu lighthousebeacon\e[0m"
+else
+  echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
+  echo -e "Please check the logs with: \e[7msudo journalctl -xeu lighthousebeacon\e[0m and restart the script."
+fi
+
+printCyan "ALL DONE!" && sleep 1
