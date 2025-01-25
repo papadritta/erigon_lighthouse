@@ -190,7 +190,6 @@ if [[ $(systemctl is-active erigon) == "active" ]]; then
 else
   echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
   echo -e "Please check the logs with: \e[7msudo journalctl -xeu erigon\e[0m and restart the script."
-  exit 1
 fi
 
 printCyan "Check Lighthouse Beacon status..." && sleep 1
@@ -202,7 +201,6 @@ if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
 else
   echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
   echo -e "Please check the logs with: \e[7msudo journalctl -xeu lighthousebeacon\e[0m and restart the script."
-  exit 1
 fi
 
 printCyan "ALL DONE!" && sleep 1
