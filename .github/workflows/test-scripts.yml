@@ -1,4 +1,4 @@
-name: Test Bash Scripts
+name: Test and Validate Bash Scripts
 
 on:
   pull_request: # Run on pull requests to the main branch
@@ -21,7 +21,17 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt update
-        sudo apt install -y curl tar jq bc lsb-release build-essential
+        sudo apt install -y curl tar jq bc lsb-release build-essential shellcheck shfmt
+
+    # Run ShellCheck for linting
+    - name: Lint Shell Scripts with ShellCheck
+      run: |
+        shellcheck ./box/*.sh
+
+    # Run shfmt for formatting validation
+    - name: Format Shell Scripts with shfmt
+      run: |
+        shfmt -d ./box/*.sh
 
     # Test the check.sh script
     - name: Run check.sh
