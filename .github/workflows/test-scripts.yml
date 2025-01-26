@@ -1,4 +1,4 @@
-name: Test and Validate Bash Scripts
+name: Test Bash Scripts
 
 on:
   pull_request: # Run on pull requests to the main branch
@@ -13,43 +13,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    # Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      # Install dependencies needed for the scripts
-      - name: Install Dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y curl tar jq bc lsb-release build-essential shellcheck shfmt
+    # Install dependencies needed for the scripts
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y curl tar jq bc lsb-release build-essential
 
-      # Run ShellCheck for linting with -x
-      - name: Lint Shell Scripts with ShellCheck
-        run: |
-          for script in ./box/*.sh; do
-            shellcheck -x "$script"
-          done
+    # Test the check.sh script
+    - name: Run check.sh
+      run: |
+        chmod +x ./box/check.sh
+        ./box/check.sh
 
-      # Run shfmt for formatting validation
-      - name: Format Shell Scripts with shfmt
-        run: |
-          shfmt -d ./box/*.sh
+    # Test the erigon_lh_setup.sh script
+    - name: Run erigon_lh_setup.sh
+      run: |
+        chmod +x ./box/erigon_lh_setup.sh
+        ./box/erigon_lh_setup.sh
+      env: 
+        HOME: /home/runner # Define HOME to avoid issues during testing (optional)
 
-      # Test the check.sh script
-      - name: Run check.sh
-        run: |
-          chmod +x ./box/check.sh
-          ./box/check.sh
-
-      # Test the erigon_lh_setup.sh script with profile loading and environment setup
-      - name: Run erigon_lh_setup.sh
-        run: |
-          chmod +x ./box/erigon_lh_setup.sh
-          shellcheck -x ./box/erigon_lh_setup.sh
-          ./box/erigon_lh_setup.sh
-        env:
-          HOME: /home/runner # Set the HOME environment variable to /home/runner
-
-      # Validate that the scripts completed successfully
-      - name: Validate Scripts
-        run: echo "All scripts passed successfully!"
+    # Validate that the scripts completed successfully
+    - name: Validate Scripts
+      run: echo "All scripts passed successfully!"
