@@ -1,6 +1,6 @@
 #!/bin/bash
-exists()
-{
+
+exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
@@ -33,15 +33,13 @@ printLine() {
   echo "============================================================="
 }
 
-if exists curl; then
-  echo ''
-else
+if ! exists curl; then
   sudo apt update && sudo apt install curl -y < "/dev/null"
 fi
 
-bash_profile=$HOME/.bash_profile
+bash_profile="$HOME/.bash_profile"
 if [ -f "$bash_profile" ]; then
-    . $HOME/.bash_profile
+    . "$bash_profile"
 fi
 
 printLogo
@@ -51,19 +49,21 @@ sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
 
 printCyan "Installing dependencies..." && sleep 1
 sudo apt-get update
-sudo apt-get install -y git clang llvm ca-certificates curl build-essential binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq gcc g++ libssl-dev protobuf-compiler clang llvm
+sudo apt-get install -y git clang llvm ca-certificates curl build-essential \
+  binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq gcc g++ \
+  libssl-dev protobuf-compiler clang llvm
 
 printCyan "Installing Golang..." && sleep 1
-cd $HOME
+cd "$HOME" || exit
 curl -LO https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-source $HOME/.profile
+export PATH="$PATH:/usr/local/go/bin"
+source "$HOME/.profile"
 rm go1.19.3.linux-amd64.tar.gz
 
 printCyan "Setting jwtsecret..." && sleep 1
-cd $HOME
+cd "$HOME" || exit
 sudo mkdir -p /var/lib/jwtsecret
 openssl rand -hex 32 | sudo tee /var/lib/jwtsecret/jwt.hex > /dev/null
 
@@ -76,19 +76,18 @@ install_or_update_erigon() {
     printCyan "Installing Erigon..." && sleep 1
   fi
 
-  cd $HOME
+  cd "$HOME" || exit
   curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v2.61.0.tar.gz
   tar xvf v2.61.0.tar.gz
-  cd erigon-2.61.0
+  cd "erigon-2.61.0" || exit
 
   printCyan "Building Erigon..." && sleep 1
-  make erigon
-  if [[ $? -ne 0 ]]; then
+  if ! make erigon; then
     printRed "Error: Failed to build Erigon. Check the logs for details."
     exit 1
   fi
 
-  cd $HOME
+  cd "$HOME" || exit
   sudo mv erigon-2.61.0 /usr/local/bin/erigon
   rm v2.61.0.tar.gz
 
@@ -140,7 +139,7 @@ install_or_update_lighthouse() {
     printCyan "Installing Lighthouse Beacon..." && sleep 1
   fi
 
-  cd $HOME
+  cd "$HOME" || exit
   curl -LO https://github.com/sigp/lighthouse/releases/download/v6.0.1/lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
   tar xvf lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
   sudo mv lighthouse /usr/local/bin
@@ -184,23 +183,15 @@ printLine
 printCyan "Check Erigon status..." && sleep 1
 if [[ $(systemctl is-active erigon) == "active" ]]; then
   echo -e "Your Erigon \e[32mhas been installed and is running correctly\e[39m!"
-  echo -e "You can check the node status with the command: \e[7msudo systemctl status erigon\e[0m"
-  echo -e "Press \e[7mQ\e[0m to exit the status menu."
-  echo -e "You can also view logs with: \e[7msudo journalctl -fu erigon\e[0m"
 else
   echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
-  echo -e "Please check the logs with: \e[7msudo journalctl -xeu erigon\e[0m and restart the script."
 fi
 
 printCyan "Check Lighthouse Beacon status..." && sleep 1
 if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
   echo -e "Your Lighthouse Beacon \e[32mhas been installed and is running correctly\e[39m!"
-  echo -e "You can check the node status with the command: \e[7msudo systemctl status lighthousebeacon\e[0m"
-  echo -e "Press \e[7mQ\e[0m to exit the status menu."
-  echo -e "You can also view logs with: \e[7msudo journalctl -fu lighthousebeacon\e[0m"
 else
   echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
-  echo -e "Please check the logs with: \e[7msudo journalctl -xeu lighthousebeacon\e[0m and restart the script."
 fi
 
 printCyan "ALL DONE!" && sleep 1
