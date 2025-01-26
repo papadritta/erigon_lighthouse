@@ -43,6 +43,7 @@ jobs:
     - name: Run erigon_lh_setup.sh
       run: |
         chmod +x ./box/erigon_lh_setup.sh
+        shellcheck -x ./box/erigon_lh_setup.sh
         ./box/erigon_lh_setup.sh
       env: 
         HOME: /home/runner # Define HOME to avoid issues during testing (optional)
