@@ -8,7 +8,7 @@ check_installed() {
   systemctl is-active --quiet "$1" && echo "true" || echo "false"
 }
 
-printLogo() {
+printLogo1() {
   echo -e "\e[34m"
   echo "============================================================="
   echo "   ███████╗ ██████╗  ██╗  ██████╗   ██████╗  ███╗   ██╗"
@@ -21,10 +21,21 @@ printLogo() {
   echo -e "\e[39m"
 }
 
+printLogo2() {
+  echo -e "\e[34m" 
+  echo "==========================================================================================="
+  echo "   ██╗      ██╗  ██████╗  ██╗  ██╗ ████████╗ ██╗  ██╗  ██████╗  ██╗   ██╗  ██████╗ ███████╗"
+  echo "   ██║      ██║ ██╔════╝  ██║  ██║ ╚══██╔══╝ ██║  ██║ ██╔═══██╗ ██║   ██║ ██╔════╝ ██╔════╝"
+  echo "   ██║      ██║ ██║  ███╗ ███████║    ██║    ███████║ ██║   ██║ ██║   ██║ ██████╗  █████╗  "
+  echo "   ██║      ██║ ██║   ██║ ██╔══██║    ██║    ██╔══██║ ██║   ██║ ██║   ██║   ╚═══██ ██╔══╝  "
+  echo "   ███████╗ ██║  ██████╔╝ ██║  ██║    ██║    ██║  ██║ ╚██████╔╝ ╚██████╔╝ ██████╔╝ ███████╗"
+  echo "   ╚══════╝ ╚═╝  ╚═════╝  ╚═╝  ╚═╝    ╚═╝    ╚═╝  ╚═╝  ╚═════╝   ╚═════╝  ╚═════╝  ╚══════╝"
+  echo "==========================================================================================="
+  echo -e "\e[39m"
+}
+
 printCyan() { echo -e "\e[96m$1\e[39m"; }
-
 printRed() { echo -e "\e[91m$1\e[39m"; }
-
 printLine() { echo "============================================================="; }
 
 loadProfile() {
@@ -41,7 +52,8 @@ loadProfile() {
   fi
 }
 
-printLogo
+printLogo1
+printLogo2
 loadProfile
 
 printCyan "Updating packages..." && sleep 1
@@ -191,15 +203,14 @@ install_erigon "$ERIGON_VERSION"
 install_lighthouse "$LIGHTHOUSE_VERSION"
 
 printLine
-
-printCyan "Check Erigon status..." && sleep 1
+printCyan "Check Erigon status..."
 if [[ $(systemctl is-active erigon) == "active" ]]; then
   echo -e "Your Erigon \e[32mis installed and running correctly\e[39m!"
 else
   echo -e "Your Erigon \e[31mwas not installed correctly\e[39m. Please check logs."
 fi
 
-printCyan "Check Lighthouse Beacon status..." && sleep 1
+printCyan "Check Lighthouse Beacon status..."
 if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
   echo -e "Your Lighthouse Beacon \e[32mis installed and running correctly\e[39m!"
 else
