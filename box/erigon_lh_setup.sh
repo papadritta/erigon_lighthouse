@@ -51,7 +51,6 @@ printCyan "Updating packages..." && sleep 1
 sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
 
 printCyan "Installing dependencies..." && sleep 1
-sudo apt-get update
 sudo apt-get install -y git clang llvm ca-certificates curl build-essential \
   binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq \
   gcc g++ libssl-dev protobuf-compiler clang llvm
@@ -86,8 +85,7 @@ install_or_update_erigon() {
   cd "erigon-2.61.0" || exit
 
   printCyan "Building Erigon..." && sleep 1
-  make erigon
-  if ! [ $? -eq 0 ]; then
+  if ! make erigon; then
     printRed "Error: Failed to build Erigon. Check the logs for details."
     exit 1
   fi
@@ -95,41 +93,6 @@ install_or_update_erigon() {
   cd "$HOME" || exit
   sudo mv erigon-2.61.0 /usr/local/bin/erigon
   rm v2.61.0.tar.gz
-
-  sudo useradd --no-create-home --shell /bin/false erigon || true
-  sudo mkdir -p /var/lib/erigon
-  sudo chown -R erigon:erigon /var/lib/erigon
-
-  sudo tee /etc/systemd/system/erigon.service >/dev/null <<EOF
-[Unit]
-Description=Erigon Execution Client (Mainnet)
-After=network.target
-Wants=network.target
-[Service]
-User=erigon
-Group=erigon
-Type=simple
-Restart=always
-RestartSec=5
-ExecStart=/usr/local/bin/erigon/build/erigon \
-  --datadir=/var/lib/erigon \
-  --rpc.gascap=50000000 \
-  --http \
-  --ws \
-  --rpc.batch.concurrency=100 \
-  --state.cache=2000000 \
-  --http.addr="0.0.0.0" \
-  --http.port=8545 \
-  --http.api="eth,erigon,web3,net,debug,trace,txpool" \
-  --authrpc.port=8551 \
-  --private.api.addr="0.0.0.0:9595" \
-  --http.corsdomain="*" \
-  --torrent.download.rate 90m \
-  --authrpc.jwtsecret=/var/lib/jwtsecret/jwt.hex \
-  --metrics
-[Install]
-WantedBy=default.target
-EOF
 
   sudo systemctl daemon-reload
   sudo systemctl enable erigon
@@ -151,32 +114,6 @@ install_or_update_lighthouse() {
   sudo mv lighthouse /usr/local/bin
   rm lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
 
-  sudo useradd --no-create-home --shell /bin/false lighthousebeacon || true
-  sudo mkdir -p /var/lib/lighthouse/beacon
-  sudo chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse/beacon
-
-  sudo tee /etc/systemd/system/lighthousebeacon.service >/dev/null <<EOF
-[Unit]
-Description=Lighthouse Consensus Client BN (Mainnet)
-Wants=network-online.target
-After=network-online.target
-[Service]
-User=lighthousebeacon
-Group=lighthousebeacon
-Type=simple
-Restart=always
-RestartSec=5
-ExecStart=/usr/local/bin/lighthouse bn \
-  --network mainnet \
-  --datadir /var/lib/lighthouse \
-  --http \
-  --execution-endpoint http://localhost:8551 \
-  --execution-jwt /var/lib/jwtsecret/jwt.hex \
-  --metrics
-[Install]
-WantedBy=multi-user.target
-EOF
-
   sudo systemctl daemon-reload
   sudo systemctl enable lighthousebeacon
   sudo systemctl start lighthousebeacon
@@ -190,21 +127,23 @@ printLine
 printCyan "Check Erigon status..." && sleep 1
 if [[ $(systemctl is-active erigon) == "active" ]]; then
   echo -e "Your Erigon \e[32mhas been installed and is running correctly\e[39m!"
-  echo -e "Check node status: \e[7msudo systemctl status erigon\e[0m"
-  echo -e "View logs: \e[7msudo journalctl -fu erigon\e[0m"
+  echo -e "You can check the node status with the command: \e[7msudo systemctl status erigon\e[0m"
+  echo -e "Press \e[7mQ\e[0m to exit the status menu."
+  echo -e "You can also view logs with: \e[7msudo journalctl -fu erigon\e[0m"
 else
   echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
-  echo -e "Check logs: \e[7msudo journalctl -xeu erigon\e[0m"
+  echo -e "Please check the logs with: \e[7msudo journalctl -xeu erigon\e[0m and restart the script."
 fi
 
 printCyan "Check Lighthouse Beacon status..." && sleep 1
 if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
   echo -e "Your Lighthouse Beacon \e[32mhas been installed and is running correctly\e[39m!"
-  echo -e "Check node status: \e[7msudo systemctl status lighthousebeacon\e[0m"
-  echo -e "View logs: \e[7msudo journalctl -fu lighthousebeacon\e[0m"
+  echo -e "You can check the node status with the command: \e[7msudo systemctl status lighthousebeacon\e[0m"
+  echo -e "Press \e[7mQ\e[0m to exit the status menu."
+  echo -e "You can also view logs with: \e[7msudo journalctl -fu lighthousebeacon\e[0m"
 else
   echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
-  echo -e "Check logs: \e[7msudo journalctl -xeu lighthousebeacon\e[0m"
+  echo -e "Please check the logs with: \e[7msudo journalctl -xeu lighthousebeacon\e[0m and restart the script."
 fi
 
 printCyan "ALL DONE!" && sleep 1
