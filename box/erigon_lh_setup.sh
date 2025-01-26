@@ -9,7 +9,7 @@ check_installed() {
 }
 
 printLogo() {
-  echo -e "\e[34m"  
+  echo -e "\e[34m"
   echo "============================================================="
   echo "   ███████╗ ██████╗  ██╗  ██████╗   ██████╗  ███╗   ██╗"
   echo "   ██╔════╝ ██╔══██╗ ██║ ██╔════╝  ██╔═══██╗ ████╗  ██║"
@@ -18,7 +18,7 @@ printLogo() {
   echo "   ███████╗ ██║ ╚██╗ ██║ ╚██████╔╝ ╚██████╔╝ ██║ ╚████║"
   echo "   ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═════╝   ╚═════╝  ╚═╝  ╚═══╝"
   echo "============================================================="
-  echo -e "\e[39m" 
+  echo -e "\e[39m"
 }
 
 printCyan() {
@@ -38,16 +38,17 @@ if ! exists curl; then
 fi
 
 if [ -f "$HOME/.bash_profile" ]; then
+  . "$HOME/.bash_profile"
+fi
 
-  . "$HOME/.bash_profile" 
+if [ -f "$HOME/.profile" ]; then
+  source "$HOME/.profile"
 fi
 
 printLogo
 
-
 printCyan "Updating packages..." && sleep 1
 sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
-
 
 printCyan "Installing dependencies..." && sleep 1
 sudo apt-get update
@@ -55,15 +56,14 @@ sudo apt-get install -y git clang llvm ca-certificates curl build-essential \
   binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq \
   gcc g++ libssl-dev protobuf-compiler clang llvm
 
-
 printCyan "Installing Golang..." && sleep 1
-cd "$HOME" || exit  
+cd "$HOME" || exit
 curl -LO https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
 if [ -f "$HOME/.profile" ]; then
-  source "$HOME/.profile"  
+  source "$HOME/.profile"
 fi
 rm go1.19.3.linux-amd64.tar.gz
 
@@ -80,14 +80,14 @@ install_or_update_erigon() {
     printCyan "Installing Erigon..." && sleep 1
   fi
 
-  cd "$HOME" || exit 
+  cd "$HOME" || exit
   curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v2.61.0.tar.gz
   tar xvf v2.61.0.tar.gz
-  cd "erigon-2.61.0" || exit 
+  cd "erigon-2.61.0" || exit
 
   printCyan "Building Erigon..." && sleep 1
   make erigon
-  if [[ $? -ne 0 ]]; then
+  if ! [ $? -eq 0 ]; then
     printRed "Error: Failed to build Erigon. Check the logs for details."
     exit 1
   fi
@@ -145,7 +145,7 @@ install_or_update_lighthouse() {
     printCyan "Installing Lighthouse Beacon..." && sleep 1
   fi
 
-  cd "$HOME" || exit 
+  cd "$HOME" || exit
   curl -LO https://github.com/sigp/lighthouse/releases/download/v6.0.1/lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
   tar xvf lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
   sudo mv lighthouse /usr/local/bin
