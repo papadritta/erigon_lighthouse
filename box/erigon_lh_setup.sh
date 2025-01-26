@@ -37,12 +37,13 @@ if ! exists curl; then
   sudo apt update && sudo apt install curl -y < "/dev/null"
 fi
 
+# shellcheck disable=SC1091
 if [ -f "$HOME/.bash_profile" ]; then
   . "$HOME/.bash_profile"
 else
   echo "Warning: $HOME/.bash_profile not found. Skipping."
 fi
-
+# shellcheck disable=SC1091
 if [ -f "$HOME/.profile" ]; then
   source "$HOME/.profile"
 else
