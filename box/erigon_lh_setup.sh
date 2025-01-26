@@ -40,11 +40,15 @@ fi
 bash_profile=$HOME/.bash_profile
 if [ -f "$HOME/.bash_profile" ]; then
   . "$HOME/.bash_profile"
+else
+  echo "Warning: $HOME/.bash_profile not found. Skipping."
 fi
 
 profile=$HOME/.profile
 if [ -f "$HOME/.profile" ]; then
   source "$HOME/.profile"
+else
+  echo "Warning: $HOME/.profile not found. Skipping."
 fi
 
 printLogo
