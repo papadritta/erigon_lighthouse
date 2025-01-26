@@ -9,7 +9,7 @@ check_installed() {
 }
 
 printLogo() {
-  echo -e "\e[34m"  # Blue color
+  echo -e "\e[34m"  
   echo "============================================================="
   echo "   ███████╗ ██████╗  ██╗  ██████╗   ██████╗  ███╗   ██╗"
   echo "   ██╔════╝ ██╔══██╗ ██║ ██╔════╝  ██╔═══██╗ ████╗  ██║"
@@ -18,7 +18,7 @@ printLogo() {
   echo "   ███████╗ ██║ ╚██╗ ██║ ╚██████╔╝ ╚██████╔╝ ██║ ╚████║"
   echo "   ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═════╝   ╚═════╝  ╚═╝  ╚═══╝"
   echo "============================================================="
-  echo -e "\e[39m"  # Reset color
+  echo -e "\e[39m" 
 }
 
 printCyan() {
@@ -33,45 +33,43 @@ printLine() {
   echo "============================================================="
 }
 
-# Ensure `curl` is installed
 if ! exists curl; then
   sudo apt update && sudo apt install curl -y < "/dev/null"
 fi
 
-# Source the .bash_profile if it exists (ShellCheck directive added)
-# shellcheck source=/dev/null
 if [ -f "$HOME/.bash_profile" ]; then
-  . "$HOME/.bash_profile"
+
+  . "$HOME/.bash_profile" 
 fi
 
 printLogo
 
+
 printCyan "Updating packages..." && sleep 1
 sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y
+
 
 printCyan "Installing dependencies..." && sleep 1
 sudo apt-get update
 sudo apt-get install -y git clang llvm ca-certificates curl build-essential \
-  binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq gcc g++ \
-  libssl-dev protobuf-compiler clang llvm
+  binaryen protobuf-compiler libssl-dev pkg-config libclang-dev cmake jq \
+  gcc g++ libssl-dev protobuf-compiler clang llvm
+
 
 printCyan "Installing Golang..." && sleep 1
-cd "$HOME" || exit
+cd "$HOME" || exit  
 curl -LO https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
-# Explicitly source profile if available
 if [ -f "$HOME/.profile" ]; then
-  # shellcheck source=/dev/null
-  source "$HOME/.profile"
+  source "$HOME/.profile"  
 fi
 rm go1.19.3.linux-amd64.tar.gz
 
 printCyan "Setting jwtsecret..." && sleep 1
-cd "$HOME" || exit
 sudo mkdir -p /var/lib/jwtsecret
-openssl rand -hex 32 | sudo tee /var/lib/jwtsecret/jwt.hex > /dev/null
+openssl rand -hex 32 | sudo tee /var/lib/jwtsecret/jwt.hex >/dev/null
 
 install_or_update_erigon() {
   if [ "$(check_installed erigon)" == "true" ]; then
@@ -82,13 +80,14 @@ install_or_update_erigon() {
     printCyan "Installing Erigon..." && sleep 1
   fi
 
-  cd "$HOME" || exit
+  cd "$HOME" || exit 
   curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v2.61.0.tar.gz
   tar xvf v2.61.0.tar.gz
-  cd "erigon-2.61.0" || exit
+  cd "erigon-2.61.0" || exit 
 
   printCyan "Building Erigon..." && sleep 1
-  if ! make erigon; then
+  make erigon
+  if [[ $? -ne 0 ]]; then
     printRed "Error: Failed to build Erigon. Check the logs for details."
     exit 1
   fi
@@ -101,7 +100,7 @@ install_or_update_erigon() {
   sudo mkdir -p /var/lib/erigon
   sudo chown -R erigon:erigon /var/lib/erigon
 
-  sudo tee /etc/systemd/system/erigon.service > /dev/null <<EOF
+  sudo tee /etc/systemd/system/erigon.service >/dev/null <<EOF
 [Unit]
 Description=Erigon Execution Client (Mainnet)
 After=network.target
@@ -127,24 +126,85 @@ ExecStart=/usr/local/bin/erigon/build/erigon \
   --http.corsdomain="*" \
   --torrent.download.rate 90m \
   --authrpc.jwtsecret=/var/lib/jwtsecret/jwt.hex \
-  --metrics 
+  --metrics
 [Install]
 WantedBy=default.target
 EOF
+
   sudo systemctl daemon-reload
   sudo systemctl enable erigon
   sudo systemctl start erigon
 }
 
+install_or_update_lighthouse() {
+  if [ "$(check_installed lighthousebeacon)" == "true" ]; then
+    printCyan "Updating Lighthouse..." && sleep 1
+    sudo systemctl stop lighthousebeacon
+    sudo rm -rf /usr/local/bin/lighthouse
+  else
+    printCyan "Installing Lighthouse Beacon..." && sleep 1
+  fi
+
+  cd "$HOME" || exit 
+  curl -LO https://github.com/sigp/lighthouse/releases/download/v6.0.1/lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
+  tar xvf lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
+  sudo mv lighthouse /usr/local/bin
+  rm lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
+
+  sudo useradd --no-create-home --shell /bin/false lighthousebeacon || true
+  sudo mkdir -p /var/lib/lighthouse/beacon
+  sudo chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse/beacon
+
+  sudo tee /etc/systemd/system/lighthousebeacon.service >/dev/null <<EOF
+[Unit]
+Description=Lighthouse Consensus Client BN (Mainnet)
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=lighthousebeacon
+Group=lighthousebeacon
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/local/bin/lighthouse bn \
+  --network mainnet \
+  --datadir /var/lib/lighthouse \
+  --http \
+  --execution-endpoint http://localhost:8551 \
+  --execution-jwt /var/lib/jwtsecret/jwt.hex \
+  --metrics
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  sudo systemctl daemon-reload
+  sudo systemctl enable lighthousebeacon
+  sudo systemctl start lighthousebeacon
+}
+
 install_or_update_erigon
+install_or_update_lighthouse
 
 printLine
 
 printCyan "Check Erigon status..." && sleep 1
 if [[ $(systemctl is-active erigon) == "active" ]]; then
   echo -e "Your Erigon \e[32mhas been installed and is running correctly\e[39m!"
+  echo -e "Check node status: \e[7msudo systemctl status erigon\e[0m"
+  echo -e "View logs: \e[7msudo journalctl -fu erigon\e[0m"
 else
   echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
+  echo -e "Check logs: \e[7msudo journalctl -xeu erigon\e[0m"
+fi
+
+printCyan "Check Lighthouse Beacon status..." && sleep 1
+if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
+  echo -e "Your Lighthouse Beacon \e[32mhas been installed and is running correctly\e[39m!"
+  echo -e "Check node status: \e[7msudo systemctl status lighthousebeacon\e[0m"
+  echo -e "View logs: \e[7msudo journalctl -fu lighthousebeacon\e[0m"
+else
+  echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
+  echo -e "Check logs: \e[7msudo journalctl -xeu lighthousebeacon\e[0m"
 fi
 
 printCyan "ALL DONE!" && sleep 1
