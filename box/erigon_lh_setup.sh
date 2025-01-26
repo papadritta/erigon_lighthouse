@@ -33,13 +33,15 @@ printLine() {
   echo "============================================================="
 }
 
+# Ensure `curl` is installed
 if ! exists curl; then
   sudo apt update && sudo apt install curl -y < "/dev/null"
 fi
 
-bash_profile="$HOME/.bash_profile"
-if [ -f "$bash_profile" ]; then
-    . "$bash_profile"
+# Source the .bash_profile if it exists (ShellCheck directive added)
+# shellcheck source=/dev/null
+if [ -f "$HOME/.bash_profile" ]; then
+  . "$HOME/.bash_profile"
 fi
 
 printLogo
@@ -59,7 +61,11 @@ curl -LO https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
-source "$HOME/.profile"
+# Explicitly source profile if available
+if [ -f "$HOME/.profile" ]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.profile"
+fi
 rm go1.19.3.linux-amd64.tar.gz
 
 printCyan "Setting jwtsecret..." && sleep 1
@@ -130,53 +136,7 @@ EOF
   sudo systemctl start erigon
 }
 
-install_or_update_lighthouse() {
-  if [ "$(check_installed lighthousebeacon)" == "true" ]; then
-    printCyan "Updating Lighthouse..." && sleep 1
-    sudo systemctl stop lighthousebeacon
-    sudo rm -rf /usr/local/bin/lighthouse
-  else
-    printCyan "Installing Lighthouse Beacon..." && sleep 1
-  fi
-
-  cd "$HOME" || exit
-  curl -LO https://github.com/sigp/lighthouse/releases/download/v6.0.1/lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
-  tar xvf lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
-  sudo mv lighthouse /usr/local/bin
-  rm lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
-
-  sudo useradd --no-create-home --shell /bin/false lighthousebeacon || true
-  sudo mkdir -p /var/lib/lighthouse/beacon
-  sudo chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse/beacon
-
-  sudo tee /etc/systemd/system/lighthousebeacon.service > /dev/null <<EOF
-[Unit]
-Description=Lighthouse Consensus Client BN (Mainnet)
-Wants=network-online.target
-After=network-online.target
-[Service]
-User=lighthousebeacon
-Group=lighthousebeacon
-Type=simple
-Restart=always
-RestartSec=5
-ExecStart=/usr/local/bin/lighthouse bn \
-  --network mainnet \
-  --datadir /var/lib/lighthouse \
-  --http \
-  --execution-endpoint http://localhost:8551 \
-  --execution-jwt /var/lib/jwtsecret/jwt.hex \
-  --metrics
-[Install]
-WantedBy=multi-user.target
-EOF
-  sudo systemctl daemon-reload
-  sudo systemctl enable lighthousebeacon
-  sudo systemctl start lighthousebeacon
-}
-
 install_or_update_erigon
-install_or_update_lighthouse
 
 printLine
 
@@ -185,13 +145,6 @@ if [[ $(systemctl is-active erigon) == "active" ]]; then
   echo -e "Your Erigon \e[32mhas been installed and is running correctly\e[39m!"
 else
   echo -e "Your Erigon \e[31mwas not installed or started correctly\e[39m."
-fi
-
-printCyan "Check Lighthouse Beacon status..." && sleep 1
-if [[ $(systemctl is-active lighthousebeacon) == "active" ]]; then
-  echo -e "Your Lighthouse Beacon \e[32mhas been installed and is running correctly\e[39m!"
-else
-  echo -e "Your Lighthouse Beacon \e[31mwas not installed or started correctly\e[39m."
 fi
 
 printCyan "ALL DONE!" && sleep 1
