@@ -37,6 +37,7 @@ if ! exists curl; then
   sudo apt update && sudo apt install curl -y < "/dev/null"
 fi
 
+
 if [ -f "$HOME/.bash_profile" ]; then
   . "$HOME/.bash_profile"
 fi
