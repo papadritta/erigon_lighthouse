@@ -73,9 +73,9 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
-  curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.1.tar.gz
-  tar xvf v3.0.1.tar.gz
-  cd erigon-3.0.1 || exit
+  curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.2.tar.gz
+  tar xvf v3.0.2.tar.gz
+  cd erigon-3.0.2 || exit
 
   printCyan "Building Erigon..." && sleep 1
   make erigon
@@ -85,8 +85,8 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
-  sudo mv erigon-3.0.1 /usr/local/bin/erigon
-  rm v3.0.1.tar.gz
+  sudo mv erigon-3.0.2 /usr/local/bin/erigon
+  rm v3.0.2.tar.gz
 
   sudo useradd --no-create-home --shell /bin/false erigon || true
   sudo mkdir -p /var/lib/erigon
