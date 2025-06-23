@@ -73,9 +73,11 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
-  curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.2.tar.gz
-  tar xvf v3.0.2.tar.gz
-  cd erigon-3.0.2 || exit
+
+  curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.7.tar.gz
+  tar xvf v3.0.7.tar.gz
+  cd erigon-3.0.7 || exit
+
 
   printCyan "Building Erigon..." && sleep 1
   make erigon
@@ -85,8 +87,10 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
-  sudo mv erigon-3.0.2 /usr/local/bin/erigon
-  rm v3.0.2.tar.gz
+
+  sudo mv erigon-3.0.7 /usr/local/bin/erigon
+  rm v3.0.7.tar.gz
+
 
   sudo useradd --no-create-home --shell /bin/false erigon || true
   sudo mkdir -p /var/lib/erigon
@@ -137,10 +141,10 @@ install_or_update_lighthouse() {
   fi
 
   cd "$HOME" || exit
-  curl -LO https://github.com/sigp/lighthouse/releases/download/v6.0.1/lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
-  tar xvf lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
+  curl -LO https://github.com/sigp/lighthouse/releases/download/v7.0.1/lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
+  tar xvf lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
   sudo mv lighthouse /usr/local/bin
-  rm lighthouse-v6.0.1-x86_64-unknown-linux-gnu.tar.gz
+  rm lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
 
   sudo useradd --no-create-home --shell /bin/false lighthousebeacon || true
   sudo mkdir -p /var/lib/lighthouse/beacon
