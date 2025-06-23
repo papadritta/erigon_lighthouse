@@ -73,9 +73,11 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
+
   curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.7.tar.gz
   tar xvf v3.0.7.tar.gz
   cd erigon-3.0.7 || exit
+
 
   printCyan "Building Erigon..." && sleep 1
   make erigon
@@ -85,8 +87,10 @@ install_or_update_erigon() {
   fi
 
   cd "$HOME" || exit
+
   sudo mv erigon-3.0.7 /usr/local/bin/erigon
   rm v3.0.7.tar.gz
+
 
   sudo useradd --no-create-home --shell /bin/false erigon || true
   sudo mkdir -p /var/lib/erigon
