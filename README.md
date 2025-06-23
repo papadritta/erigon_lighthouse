@@ -1,4 +1,4 @@
-# Installation  NEW release Erigon [v3.0.1](https://github.com/erigontech/erigon/releases/tag/v3.0.1) + lighthouse [v6.0.1](https://github.com/sigp/lighthouse/tree/v6.0.1) or quick update
+# Installation  NEW release Erigon [v3.0.7](https://github.com/erigontech/erigon/releases/tag/v3.0.7) + lighthouse [v7.0.1](https://github.com/sigp/lighthouse/tree/v7.0.1) or quick update
 ![Copy of Copy of Copy of Staking is live](https://github.com/user-attachments/assets/d87dc4fa-1143-4df0-a622-e96d9490d2d7)
 
 ## Table of Contents
