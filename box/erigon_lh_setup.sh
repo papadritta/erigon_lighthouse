@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Version variables - update these for new versions
-ERIGON_VERSION="3.0.7"
+ERIGON_VERSION="3.0.9"
 ERIGON_ARCHIVE="v${ERIGON_VERSION}.tar.gz"
 LIGHTHOUSE_VERSION="7.0.1"
 LIGHTHOUSE_ARCHIVE="lighthouse-v${LIGHTHOUSE_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
