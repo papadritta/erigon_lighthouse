@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# Version variables - update these for new versions
-ERIGON_VERSION="3.0.7"
-ERIGON_ARCHIVE="v${ERIGON_VERSION}.tar.gz"
-LIGHTHOUSE_VERSION="7.0.1"
-LIGHTHOUSE_ARCHIVE="lighthouse-v${LIGHTHOUSE_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-GO_VERSION="1.19.3"
-GO_ARCHIVE="go${GO_VERSION}.linux-amd64.tar.gz"
-
 exists() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -60,12 +52,12 @@ sudo apt-get install -y git clang llvm ca-certificates curl build-essential bina
 
 printCyan "Installing Golang..." && sleep 1
 cd "$HOME" || exit
-curl -LO "https://go.dev/dl/${GO_ARCHIVE}"
+curl -LO https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xzf "$GO_ARCHIVE"
+sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
 source "$HOME/.profile"
-rm "$GO_ARCHIVE"
+rm go1.19.3.linux-amd64.tar.gz
 
 printCyan "Setting JWT secret..." && sleep 1
 sudo mkdir -p /var/lib/jwtsecret
@@ -82,9 +74,10 @@ install_or_update_erigon() {
 
   cd "$HOME" || exit
 
-  curl -LO "https://github.com/erigontech/erigon/archive/refs/tags/${ERIGON_ARCHIVE}"
-  tar xvf "$ERIGON_ARCHIVE"
-  cd "erigon-${ERIGON_VERSION}" || exit
+  curl -LO https://github.com/erigontech/erigon/archive/refs/tags/v3.0.7.tar.gz
+  tar xvf v3.0.7.tar.gz
+  cd erigon-3.0.7 || exit
+
 
   printCyan "Building Erigon..." && sleep 1
   make erigon
@@ -95,8 +88,9 @@ install_or_update_erigon() {
 
   cd "$HOME" || exit
 
-  sudo mv "erigon-${ERIGON_VERSION}" /usr/local/bin/erigon
-  rm "$ERIGON_ARCHIVE"
+  sudo mv erigon-3.0.7 /usr/local/bin/erigon
+  rm v3.0.7.tar.gz
+
 
   sudo useradd --no-create-home --shell /bin/false erigon || true
   sudo mkdir -p /var/lib/erigon
@@ -147,10 +141,10 @@ install_or_update_lighthouse() {
   fi
 
   cd "$HOME" || exit
-  curl -LO "https://github.com/sigp/lighthouse/releases/download/v${LIGHTHOUSE_VERSION}/${LIGHTHOUSE_ARCHIVE}"
-  tar xvf "$LIGHTHOUSE_ARCHIVE"
+  curl -LO https://github.com/sigp/lighthouse/releases/download/v7.0.1/lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
+  tar xvf lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
   sudo mv lighthouse /usr/local/bin
-  rm "$LIGHTHOUSE_ARCHIVE"
+  rm lighthouse-v7.0.1-x86_64-unknown-linux-gnu.tar.gz
 
   sudo useradd --no-create-home --shell /bin/false lighthousebeacon || true
   sudo mkdir -p /var/lib/lighthouse/beacon
