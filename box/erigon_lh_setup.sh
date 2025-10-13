@@ -95,7 +95,8 @@ install_or_update_erigon() {
 
   cd "$HOME" || exit
 
-  sudo mv "erigon-${ERIGON_VERSION}" /usr/local/bin/erigon
+  sudo cp "erigon-${ERIGON_VERSION}/build/bin/erigon" /usr/local/bin/erigon
+  sudo chmod +x /usr/local/bin/erigon
   rm "$ERIGON_ARCHIVE"
 
   sudo useradd --no-create-home --shell /bin/false erigon || true
@@ -113,7 +114,7 @@ Group=erigon
 Type=simple
 Restart=always
 RestartSec=5
-ExecStart=/usr/local/bin/erigon/build/bin/erigon \
+ExecStart=/usr/local/bin/erigon \
   --datadir=/var/lib/erigon \
   --rpc.gascap=50000000 \
   --http \
@@ -173,6 +174,7 @@ ExecStart=/usr/local/bin/lighthouse bn \
   --http \
   --execution-endpoint http://localhost:8551 \
   --execution-jwt /var/lib/jwtsecret/jwt.hex \
+  --checkpoint-sync-url https://mainnet.checkpoint.sigp.io \
   --metrics
 [Install]
 WantedBy=multi-user.target
