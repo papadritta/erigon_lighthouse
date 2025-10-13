@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Version variables - update these for new versions
-ERIGON_VERSION="3.0.9"
+ERIGON_VERSION="3.2.0"
 ERIGON_ARCHIVE="v${ERIGON_VERSION}.tar.gz"
-LIGHTHOUSE_VERSION="7.0.1"
+LIGHTHOUSE_VERSION="7.1.0"
 LIGHTHOUSE_ARCHIVE="lighthouse-v${LIGHTHOUSE_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-GO_VERSION="1.19.3"
+GO_VERSION="1.25.2"
 GO_ARCHIVE="go${GO_VERSION}.linux-amd64.tar.gz"
 
 exists() {
